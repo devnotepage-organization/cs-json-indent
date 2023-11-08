@@ -25,7 +25,7 @@ namespace cs_json_indent
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void labelDescription_DragEnter(object sender, DragEventArgs e)
+        private void Control_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data?.GetDataPresent(DataFormats.FileDrop) ?? false)
             {
@@ -42,7 +42,7 @@ namespace cs_json_indent
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void labelDescription_DragDrop(object sender, DragEventArgs e)
+        private void Control_DragDrop(object sender, DragEventArgs e)
         {
             var files = ((string[]?)e.Data?.GetData(DataFormats.FileDrop, false)) ?? new string[0];
             foreach (var f in files)

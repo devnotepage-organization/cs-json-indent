@@ -57,6 +57,7 @@
             // 
             // textBoxInput
             // 
+            textBoxInput.AllowDrop = true;
             textBoxInput.Dock = DockStyle.Fill;
             textBoxInput.Location = new Point(0, 0);
             textBoxInput.Multiline = true;
@@ -64,6 +65,8 @@
             textBoxInput.Size = new Size(467, 672);
             textBoxInput.TabIndex = 0;
             textBoxInput.TextChanged += textBoxInput_TextChanged;
+            textBoxInput.DragDrop += Control_DragDrop;
+            textBoxInput.DragEnter += Control_DragEnter;
             // 
             // textBoxOutput
             // 
@@ -84,8 +87,8 @@
             labelDescription.Size = new Size(877, 75);
             labelDescription.TabIndex = 1;
             labelDescription.Text = "以下の方法でJSON文字列を整形することができます。\r\n方法１：左のテキストボックスにJSON文字列を入力すると、右のテキストボックスに整形したJSON文字列が出力されます。\r\n方法２：JSONファイルをここにドラッグ＆ドロップすると整形したJSONファイルに変換します。";
-            labelDescription.DragDrop += labelDescription_DragDrop;
-            labelDescription.DragEnter += labelDescription_DragEnter;
+            labelDescription.DragDrop += Control_DragDrop;
+            labelDescription.DragEnter += Control_DragEnter;
             // 
             // FormMain
             // 
