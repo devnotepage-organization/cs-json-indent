@@ -31,6 +31,7 @@
             splitContainer1 = new SplitContainer();
             textBoxInput = new TextBox();
             textBoxOutput = new TextBox();
+            label1 = new Label();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -39,8 +40,9 @@
             // 
             // splitContainer1
             // 
-            splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.Location = new Point(0, 0);
+            splitContainer1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            splitContainer1.Location = new Point(0, 56);
+            splitContainer1.Margin = new Padding(2);
             splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -50,17 +52,19 @@
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(textBoxOutput);
-            splitContainer1.Size = new Size(1405, 765);
-            splitContainer1.SplitterDistance = 468;
+            splitContainer1.Size = new Size(984, 403);
+            splitContainer1.SplitterDistance = 327;
+            splitContainer1.SplitterWidth = 3;
             splitContainer1.TabIndex = 0;
             // 
             // textBoxInput
             // 
             textBoxInput.Dock = DockStyle.Fill;
             textBoxInput.Location = new Point(0, 0);
+            textBoxInput.Margin = new Padding(2);
             textBoxInput.Multiline = true;
             textBoxInput.Name = "textBoxInput";
-            textBoxInput.Size = new Size(468, 765);
+            textBoxInput.Size = new Size(327, 403);
             textBoxInput.TabIndex = 0;
             textBoxInput.Text = "input";
             textBoxInput.TextChanged += textBoxInput_TextChanged;
@@ -69,18 +73,30 @@
             // 
             textBoxOutput.Dock = DockStyle.Fill;
             textBoxOutput.Location = new Point(0, 0);
+            textBoxOutput.Margin = new Padding(2);
             textBoxOutput.Multiline = true;
             textBoxOutput.Name = "textBoxOutput";
-            textBoxOutput.Size = new Size(933, 765);
+            textBoxOutput.Size = new Size(654, 403);
             textBoxOutput.TabIndex = 0;
             textBoxOutput.Text = "output";
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 9);
+            label1.Name = "label1";
+            label1.Size = new Size(577, 45);
+            label1.TabIndex = 1;
+            label1.Text = "以下の方法でJSON文字列を整形することができます。\r\n方法１：左のテキストボックスにJSON文字列を入力すると、右のテキストボックスに整形したJSON文字列が出力されます。\r\n方法２：JSONファイルをこのウインドウにドラッグ＆ドロップすると整形したJSONファイルに変換します。";
+            // 
             // FormMain
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1405, 765);
+            ClientSize = new Size(984, 459);
+            Controls.Add(label1);
             Controls.Add(splitContainer1);
+            Margin = new Padding(2);
             Name = "FormMain";
             Text = "JSONインデント整形";
             splitContainer1.Panel1.ResumeLayout(false);
@@ -90,6 +106,7 @@
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -97,5 +114,6 @@
         private SplitContainer splitContainer1;
         private TextBox textBoxInput;
         private TextBox textBoxOutput;
+        private Label label1;
     }
 }
