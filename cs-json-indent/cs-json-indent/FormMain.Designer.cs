@@ -31,7 +31,7 @@
             splitContainer1 = new SplitContainer();
             textBoxInput = new TextBox();
             textBoxOutput = new TextBox();
-            label1 = new Label();
+            labelDescription = new Label();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -78,21 +78,23 @@
             textBoxOutput.Size = new Size(654, 403);
             textBoxOutput.TabIndex = 0;
             // 
-            // label1
+            // labelDescription
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(577, 45);
-            label1.TabIndex = 1;
-            label1.Text = "以下の方法でJSON文字列を整形することができます。\r\n方法１：左のテキストボックスにJSON文字列を入力すると、右のテキストボックスに整形したJSON文字列が出力されます。\r\n方法２：JSONファイルをこのウインドウにドラッグ＆ドロップすると整形したJSONファイルに変換します。";
+            labelDescription.AllowDrop = true;
+            labelDescription.AutoSize = true;
+            labelDescription.Location = new Point(12, 9);
+            labelDescription.Name = "labelDescription";
+            labelDescription.Size = new Size(577, 45);
+            labelDescription.TabIndex = 1;
+            labelDescription.Text = "以下の方法でJSON文字列を整形することができます。\r\n方法１：左のテキストボックスにJSON文字列を入力すると、右のテキストボックスに整形したJSON文字列が出力されます。\r\n方法２：JSONファイルをここにドラッグ＆ドロップすると整形したJSONファイルに変換します。";
+            labelDescription.DragDrop += labelDescription_DragDrop;
             // 
             // FormMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(984, 459);
-            Controls.Add(label1);
+            Controls.Add(labelDescription);
             Controls.Add(splitContainer1);
             Margin = new Padding(2);
             Name = "FormMain";
@@ -112,6 +114,6 @@
         private SplitContainer splitContainer1;
         private TextBox textBoxInput;
         private TextBox textBoxOutput;
-        private Label label1;
+        private Label labelDescription;
     }
 }

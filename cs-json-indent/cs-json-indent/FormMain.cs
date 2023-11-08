@@ -10,6 +10,11 @@ namespace cs_json_indent
             InitializeComponent();
         }
 
+        /// <summary>
+        /// テキストボックスが変更されたときに処理します。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void textBoxInput_TextChanged(object sender, EventArgs e)
         {
             textBoxOutput.Text = IndentJson(textBoxInput.Text);
@@ -46,6 +51,16 @@ namespace cs_json_indent
             {
                 // エラー表示
                 return "error!!" + Environment.NewLine + Environment.NewLine + ex.Message;
+            }
+        }
+
+        private void labelDescription_DragDrop(object sender, DragEventArgs e)
+        {
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            foreach (var f in files)
+            {
+                string fileName = f;
+                textBoxOutput.Text += fileName + Environment.NewLine;
             }
         }
     }
