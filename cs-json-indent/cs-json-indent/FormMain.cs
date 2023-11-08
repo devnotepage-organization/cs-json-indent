@@ -17,7 +17,18 @@ namespace cs_json_indent
         /// <param name="e"></param>
         private void textBoxInput_TextChanged(object sender, EventArgs e)
         {
-            textBoxOutput.Text = IndentJson(textBoxInput.Text);
+            try
+            {
+                string inputJson = textBoxInput.Text;
+                string outputJson = IndentJson(inputJson);
+                textBoxOutput.Text = outputJson;
+            }
+            catch (Exception ex)
+            {
+                // エラー表示
+                textBoxOutput.Text = "error!!" + Environment.NewLine + Environment.NewLine + ex.Message;
+            }
+
         }
 
         /// <summary>
@@ -44,11 +55,25 @@ namespace cs_json_indent
         /// <param name="e"></param>
         private void Control_DragDrop(object sender, DragEventArgs e)
         {
-            var files = ((string[]?)e.Data?.GetData(DataFormats.FileDrop, false)) ?? new string[0];
-            foreach (var f in files)
+            try
             {
-                string fileName = f;
-                textBoxOutput.Text += fileName + Environment.NewLine;
+                var files = ((string[]?)e.Data?.GetData(DataFormats.FileDrop, false)) ?? new string[0];
+                foreach (var f in files)
+                {
+                    string filePath = f;
+                    if (!File.Exists(filePath)) { continue; }
+                    // ファイルパス表示
+                    textBoxOutput.Text += filePath + Environment.NewLine;
+                    // JSONファイル整形
+                    string inputJson = File.ReadAllText(filePath);
+                    string outputJson = IndentJson(inputJson);
+                    File.WriteAllText(filePath, outputJson);
+                }
+            }
+            catch (Exception ex)
+            {
+                // エラー表示
+                textBoxOutput.Text = "error!!" + Environment.NewLine + Environment.NewLine + ex.Message;
             }
         }
 
@@ -59,31 +84,23 @@ namespace cs_json_indent
         /// <returns>整形後のJSON文字列</returns>
         private static string IndentJson(string inputJson)
         {
-            try
+            // 入力チェック
+            if (inputJson.Length == 0) { return string.Empty; }
+
+            // JSON文字列をオブジェクトに変換
+            var obj = JsonSerializer.Deserialize<object>(inputJson);
+
+            // インデントのオプションを設定
+            var options = new JsonSerializerOptions
             {
-                // 入力チェック
-                if (inputJson.Length == 0) { return string.Empty; }
+                WriteIndented = true
+            };
 
-                // JSON文字列をオブジェクトに変換
-                var obj = JsonSerializer.Deserialize<object>(inputJson);
+            // オブジェクトをインデント付きのJSON文字列に変換
+            string indentedJson = JsonSerializer.Serialize(obj, options);
 
-                // インデントのオプションを設定
-                var options = new JsonSerializerOptions
-                {
-                    WriteIndented = true
-                };
-
-                // オブジェクトをインデント付きのJSON文字列に変換
-                string indentedJson = JsonSerializer.Serialize(obj, options);
-
-                // JSON文字列を返却
-                return indentedJson;
-            }
-            catch (Exception ex)
-            {
-                // エラー表示
-                return "error!!" + Environment.NewLine + Environment.NewLine + ex.Message;
-            }
+            // JSON文字列を返却
+            return indentedJson;
         }
     }
 }
