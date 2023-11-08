@@ -20,12 +20,15 @@ namespace cs_json_indent
         /// </summary>
         /// <param name="intput">整形前のJSON文字列</param>
         /// <returns>整形後のJSON文字列</returns>
-        private static string IndentJson(string intputJson)
+        private static string IndentJson(string inputJson)
         {
             try
             {
+                // 入力チェック
+                if (inputJson.Length == 0) { return string.Empty; }
+
                 // JSON文字列をオブジェクトに変換
-                var obj = JsonSerializer.Deserialize<object>(intputJson);
+                var obj = JsonSerializer.Deserialize<object>(inputJson);
 
                 // インデントのオプションを設定
                 var options = new JsonSerializerOptions

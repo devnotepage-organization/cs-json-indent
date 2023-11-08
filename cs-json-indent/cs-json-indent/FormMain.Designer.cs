@@ -66,7 +66,6 @@
             textBoxInput.Name = "textBoxInput";
             textBoxInput.Size = new Size(327, 403);
             textBoxInput.TabIndex = 0;
-            textBoxInput.Text = "input";
             textBoxInput.TextChanged += textBoxInput_TextChanged;
             // 
             // textBoxOutput
@@ -78,7 +77,6 @@
             textBoxOutput.Name = "textBoxOutput";
             textBoxOutput.Size = new Size(654, 403);
             textBoxOutput.TabIndex = 0;
-            textBoxOutput.Text = "output";
             // 
             // label1
             // 
