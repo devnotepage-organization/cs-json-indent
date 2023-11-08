@@ -20,6 +20,28 @@ namespace cs_json_indent
             textBoxOutput.Text = IndentJson(textBoxInput.Text);
         }
 
+        private void labelDescription_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data?.GetDataPresent(DataFormats.FileDrop) ?? false)
+            {
+                e.Effect = DragDropEffects.All;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void labelDescription_DragDrop(object sender, DragEventArgs e)
+        {
+            var files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            foreach (var f in files)
+            {
+                string fileName = f;
+                textBoxOutput.Text += fileName + Environment.NewLine;
+            }
+        }
+
         /// <summary>
         /// JSON文字列を見やすくインデントします。
         /// </summary>
@@ -51,16 +73,6 @@ namespace cs_json_indent
             {
                 // エラー表示
                 return "error!!" + Environment.NewLine + Environment.NewLine + ex.Message;
-            }
-        }
-
-        private void labelDescription_DragDrop(object sender, DragEventArgs e)
-        {
-            var files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-            foreach (var f in files)
-            {
-                string fileName = f;
-                textBoxOutput.Text += fileName + Environment.NewLine;
             }
         }
     }
