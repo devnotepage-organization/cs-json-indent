@@ -12,15 +12,15 @@ namespace cs_json_indent
 
         private void textBoxInput_TextChanged(object sender, EventArgs e)
         {
-            textBoxOutput.Text = ConvJson(textBoxInput.Text);
+            textBoxOutput.Text = IndentJson(textBoxInput.Text);
         }
 
         /// <summary>
-        /// JSON文字列のインデントを見やすく整形します。
+        /// JSON文字列を見やすくインデントします。
         /// </summary>
         /// <param name="intput">整形前のJSON文字列</param>
         /// <returns>整形後のJSON文字列</returns>
-        private static string ConvJson(string intputJson)
+        private static string IndentJson(string intputJson)
         {
             try
             {
