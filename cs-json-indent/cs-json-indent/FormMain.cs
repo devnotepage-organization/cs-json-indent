@@ -11,7 +11,7 @@ namespace cs_json_indent
         }
 
         /// <summary>
-        /// テキストボックスが変更されたときに処理します。
+        /// テキストボックスが変更されたときに発生します。
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -20,6 +20,11 @@ namespace cs_json_indent
             textBoxOutput.Text = IndentJson(textBoxInput.Text);
         }
 
+        /// <summary>
+        /// ドラッグしたときに発生します。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void labelDescription_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data?.GetDataPresent(DataFormats.FileDrop) ?? false)
@@ -32,9 +37,14 @@ namespace cs_json_indent
             }
         }
 
+        /// <summary>
+        /// ドラッグアンドドロップしたときに発生します。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void labelDescription_DragDrop(object sender, DragEventArgs e)
         {
-            var files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            var files = ((string[]?)e.Data?.GetData(DataFormats.FileDrop, false)) ?? new string[0];
             foreach (var f in files)
             {
                 string fileName = f;
