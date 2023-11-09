@@ -110,13 +110,16 @@ namespace cs_json_indent
         {
             // 入力チェック
             if (inputJson.Length == 0) { return string.Empty; }
+
             // JSON文字列をオブジェクトに変換
             var obj = JsonSerializer.Deserialize<object>(inputJson);
+
             // インデントのオプションを設定
             var options = new JsonSerializerOptions
             {
                 WriteIndented = true
             };
+
             // オブジェクトをインデント付きのJSON文字列に変換
             string indentedJson = JsonSerializer.Serialize(obj, options);
             return indentedJson;
