@@ -35,7 +35,7 @@ namespace cs_json_indent
             catch (Exception ex)
             {
                 // エラー表示
-                textBoxOutput.Text = "error!!" + Environment.NewLine + Environment.NewLine + ex.Message;
+                Console.WriteLine("error: " + ex.Message);
             }
 
         }
@@ -72,7 +72,7 @@ namespace cs_json_indent
                     string filePath = f;
                     if (!File.Exists(filePath)) { continue; }
                     // ファイルパス表示
-                    textBoxOutput.Text += filePath + Environment.NewLine;
+                    Console.WriteLine("file: " + filePath);
                     // JSONファイル整形
                     string inputJson = File.ReadAllText(filePath);
                     string outputJson = IndentJson(inputJson);
@@ -82,7 +82,7 @@ namespace cs_json_indent
             catch (Exception ex)
             {
                 // エラー表示
-                textBoxOutput.Text = "error!!" + Environment.NewLine + Environment.NewLine + ex.Message;
+                Console.WriteLine("error: " + ex.Message);
             }
         }
 
