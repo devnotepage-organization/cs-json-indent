@@ -38,6 +38,7 @@ namespace cs_json_indent
                 // エラー表示
                 Console.WriteLine("error: " + ex.Message);
             }
+
         }
 
         /// <summary>
@@ -64,40 +65,34 @@ namespace cs_json_indent
         /// <param name="e"></param>
         private void Control_DragDrop(object sender, DragEventArgs e)
         {
-            try
+                   try
             {
-                var paths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-                var queue = new Queue<string>();
-                foreach (var p in paths)
+     var paths = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+            var queue = new Queue<string>();
+            foreach (var p in paths)
+            {
+                queue.Enqueue(p);
+                while (queue.Count > 0)
                 {
-                    queue.Enqueue(p);
-                    while (queue.Count > 0)
+                    var path = queue.Dequeue();
+                    if (File.Exists(path) && Path.GetExtension(path).Equals(".json"))
                     {
-                        var path = queue.Dequeue();
-                        if (File.Exists(path) && Path.GetExtension(path).Equals(".json"))
+                        // JSONファイル整形
+                        Console.WriteLine("file: " + path);
+                        string inputJson = File.ReadAllText(path);
+                        string outputJson = IndentJson(inputJson);
+                        File.WriteAllText(path, outputJson);
+                    }
+                    if (Directory.Exists(path))
+                    {
+                        // ディレクトリ内ファイル取得
+                        var files = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
+                        foreach (var f in files)
                         {
-                            // JSONファイル整形
-                            Console.WriteLine("file: " + path);
-                            string inputJson = File.ReadAllText(path);
-                            string outputJson = IndentJson(inputJson);
-                            File.WriteAllText(path, outputJson);
-                        }
-                        if (Directory.Exists(path))
-                        {
-                            // ディレクトリ内ファイル取得
-                            var files = Directory.GetFiles(path, "*", SearchOption.AllDirectories);
-                            foreach (var f in files)
-                            {
-                                queue.Enqueue(f);
-                            }
+                            queue.Enqueue(f);
                         }
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                // エラー表示
-                Console.WriteLine("error: " + ex.Message);
             }
         }
 
@@ -108,18 +103,30 @@ namespace cs_json_indent
         /// <returns>整形後のJSON文字列</returns>
         private static string IndentJson(string inputJson)
         {
-            // 入力チェック
-            if (inputJson.Length == 0) { return string.Empty; }
-            // JSON文字列をオブジェクトに変換
-            var obj = JsonSerializer.Deserialize<object>(inputJson);
-            // インデントのオプションを設定
-            var options = new JsonSerializerOptions
+            try
             {
-                WriteIndented = true
-            };
-            // オブジェクトをインデント付きのJSON文字列に変換
-            string indentedJson = JsonSerializer.Serialize(obj, options);
-            return indentedJson;
+                // 入力チェック
+                if (inputJson.Length == 0) { return string.Empty; }
+
+                // JSON文字列をオブジェクトに変換
+                var obj = JsonSerializer.Deserialize<object>(inputJson);
+
+                // インデントのオプションを設定
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true
+                };
+
+                // オブジェクトをインデント付きのJSON文字列に変換
+                string indentedJson = JsonSerializer.Serialize(obj, options);
+                return indentedJson;
+            }
+            catch (Exception ex)
+            {
+                // エラー表示
+                Console.WriteLine("error: " + ex.Message);
+                return string.Empty;
+            }
         }
     }
 }
