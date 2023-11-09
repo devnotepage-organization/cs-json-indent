@@ -1,5 +1,14 @@
+ï»¿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using System.Xml;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace cs_json_indent
 {
@@ -11,7 +20,7 @@ namespace cs_json_indent
         }
 
         /// <summary>
-        /// ƒeƒLƒXƒgƒ{ƒbƒNƒX‚ª•ÏX‚³‚ê‚½‚Æ‚«‚É”­¶‚µ‚Ü‚·B
+        /// ãƒ†ã‚­ã‚¹ãƒˆãƒœãƒƒã‚¯ã‚¹ãŒå¤‰æ›´ã•ã‚ŒãŸã¨ãã«ç™ºç”Ÿã—ã¾ã™ã€‚
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -25,20 +34,20 @@ namespace cs_json_indent
             }
             catch (Exception ex)
             {
-                // ƒGƒ‰[•\¦
+                // ã‚¨ãƒ©ãƒ¼è¡¨ç¤º
                 textBoxOutput.Text = "error!!" + Environment.NewLine + Environment.NewLine + ex.Message;
             }
 
         }
 
         /// <summary>
-        /// ƒhƒ‰ƒbƒO‚µ‚½‚Æ‚«‚É”­¶‚µ‚Ü‚·B
+        /// ãƒ‰ãƒ©ãƒƒã‚°ã—ãŸã¨ãã«ç™ºç”Ÿã—ã¾ã™ã€‚
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Control_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data?.GetDataPresent(DataFormats.FileDrop) ?? false)
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
             {
                 e.Effect = DragDropEffects.All;
             }
@@ -49,7 +58,7 @@ namespace cs_json_indent
         }
 
         /// <summary>
-        /// ƒhƒ‰ƒbƒOƒAƒ“ƒhƒhƒƒbƒv‚µ‚½‚Æ‚«‚É”­¶‚µ‚Ü‚·B
+        /// ãƒ‰ãƒ©ãƒƒã‚°ã‚¢ãƒ³ãƒ‰ãƒ‰ãƒ­ãƒƒãƒ—ã—ãŸã¨ãã«ç™ºç”Ÿã—ã¾ã™ã€‚
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -57,14 +66,14 @@ namespace cs_json_indent
         {
             try
             {
-                var files = ((string[]?)e.Data?.GetData(DataFormats.FileDrop, false)) ?? new string[0];
+                var files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
                 foreach (var f in files)
                 {
                     string filePath = f;
                     if (!File.Exists(filePath)) { continue; }
-                    // ƒtƒ@ƒCƒ‹ƒpƒX•\¦
+                    // ãƒ•ã‚¡ã‚¤ãƒ«ãƒ‘ã‚¹è¡¨ç¤º
                     textBoxOutput.Text += filePath + Environment.NewLine;
-                    // JSONƒtƒ@ƒCƒ‹®Œ`
+                    // JSONãƒ•ã‚¡ã‚¤ãƒ«æ•´å½¢
                     string inputJson = File.ReadAllText(filePath);
                     string outputJson = IndentJson(inputJson);
                     File.WriteAllText(filePath, outputJson);
@@ -72,34 +81,34 @@ namespace cs_json_indent
             }
             catch (Exception ex)
             {
-                // ƒGƒ‰[•\¦
+                // ã‚¨ãƒ©ãƒ¼è¡¨ç¤º
                 textBoxOutput.Text = "error!!" + Environment.NewLine + Environment.NewLine + ex.Message;
             }
         }
 
         /// <summary>
-        /// JSON•¶š—ñ‚ğŒ©‚â‚·‚­ƒCƒ“ƒfƒ“ƒg‚µ‚Ü‚·B
+        /// JSONæ–‡å­—åˆ—ã‚’è¦‹ã‚„ã™ãã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã—ã¾ã™ã€‚
         /// </summary>
-        /// <param name="intput">®Œ`‘O‚ÌJSON•¶š—ñ</param>
-        /// <returns>®Œ`Œã‚ÌJSON•¶š—ñ</returns>
+        /// <param name="intput">æ•´å½¢å‰ã®JSONæ–‡å­—åˆ—</param>
+        /// <returns>æ•´å½¢å¾Œã®JSONæ–‡å­—åˆ—</returns>
         private static string IndentJson(string inputJson)
         {
-            // “ü—Íƒ`ƒFƒbƒN
+            // å…¥åŠ›ãƒã‚§ãƒƒã‚¯
             if (inputJson.Length == 0) { return string.Empty; }
 
-            // JSON•¶š—ñ‚ğƒIƒuƒWƒFƒNƒg‚É•ÏŠ·
+            // JSONæ–‡å­—åˆ—ã‚’ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«å¤‰æ›
             var obj = JsonSerializer.Deserialize<object>(inputJson);
 
-            // ƒCƒ“ƒfƒ“ƒg‚ÌƒIƒvƒVƒ‡ƒ“‚ğİ’è
+            // ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆã®ã‚ªãƒ—ã‚·ãƒ§ãƒ³ã‚’è¨­å®š
             var options = new JsonSerializerOptions
             {
                 WriteIndented = true
             };
 
-            // ƒIƒuƒWƒFƒNƒg‚ğƒCƒ“ƒfƒ“ƒg•t‚«‚ÌJSON•¶š—ñ‚É•ÏŠ·
+            // ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ã‚¤ãƒ³ãƒ‡ãƒ³ãƒˆä»˜ãã®JSONæ–‡å­—åˆ—ã«å¤‰æ›
             string indentedJson = JsonSerializer.Serialize(obj, options);
 
-            // JSON•¶š—ñ‚ğ•Ô‹p
+            // JSONæ–‡å­—åˆ—ã‚’è¿”å´
             return indentedJson;
         }
     }
