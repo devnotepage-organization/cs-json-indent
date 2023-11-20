@@ -109,7 +109,7 @@ namespace cs_json_indent
         private static string IndentJson(string inputJson)
         {
             // 入力チェック
-            if (inputJson.Length == 0) { return string.Empty; }
+            if (string.IsNullOrWhiteSpace(inputJson)) { return string.Empty; }
 
             // JSON文字列をオブジェクトに変換
             var obj = JsonSerializer.Deserialize<object>(inputJson);
