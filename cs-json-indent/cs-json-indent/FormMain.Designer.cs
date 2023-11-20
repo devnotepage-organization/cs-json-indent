@@ -105,7 +105,7 @@
             this.Controls.Add(this.labelDescription);
             this.Controls.Add(this.splitContainerMain);
             this.Name = "FormMain";
-            this.Text = "FormMain";
+            this.Text = "JSONインデント機能";
             this.splitContainerMain.Panel1.ResumeLayout(false);
             this.splitContainerMain.Panel1.PerformLayout();
             this.splitContainerMain.Panel2.ResumeLayout(false);
